@@ -1,6 +1,9 @@
 // lấy danh sách người dùng từ backend
 $(document).ready(function() {
     var mangNguoiDung = [];
+    function ThemNguoiDung(){
+        console.log("thêm người dùng");
+    }
     var nguoiDungService = new NguoiDungService();
     var ajaxNguoiDung = nguoiDungService.LayDanhSachNguoiDung();
     ajaxNguoiDung.
