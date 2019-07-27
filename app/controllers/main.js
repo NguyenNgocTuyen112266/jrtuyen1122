@@ -1,37 +1,37 @@
 // lấy danh sách người dùng từ backend
-$(document).ready(function() {
+$(document).ready(function () {
     var mangNguoiDung = [];
-    function ThemNguoiDung(){
+    function ThemNguoiDung() {
         console.log("thêm người dùng");
     }
     var nguoiDungService = new NguoiDungService();
     var ajaxNguoiDung = nguoiDungService.LayDanhSachNguoiDung();
     ajaxNguoiDung.
-    done(function(res) {
-        mangNguoiDung = res;
-        console.log(mangNguoiDung);
-        //luu vao local storage
+        done(function (res) {
+            mangNguoiDung = res;
+            console.log(mangNguoiDung);
+            //luu vao local storage
 
-        HienThi(mangNguoiDung);
+            HienThi(mangNguoiDung);
 
-    }).
-    fail(function(error) {
-        console.log(error);
-    })
+        }).
+        fail(function (error) {
+            console.log(error);
+        })
 
 
     function HienThi(mangHienThi) {
         var content = "";
         var tableDanhSach = $("#tblDanhSachNguoiDung")
-        mangHienThi.map(function(nguoiDung, index) {
+        mangHienThi.map(function (nguoiDung, index) {
             content += ` 
        <tr>
-       <td>${index+1} </td>
-       <td>${nguoiDung.TaiKhoan } </td>
-       <td>${nguoiDung.MatKhau } </td>
-       <td>${nguoiDung.HoTen } </td>
-       <td>${nguoiDung.Email } </td>
-       <td>${nguoiDung.SoDT } </td>
+       <td>${index + 1} </td>
+       <td>${nguoiDung.TaiKhoan} </td>
+       <td>${nguoiDung.MatKhau} </td>
+       <td>${nguoiDung.HoTen} </td>
+       <td>${nguoiDung.Email} </td>
+       <td>${nguoiDung.SoDT} </td>
        <td><button class="btn btn-danger btnXoa" data-id="${nguoiDung.TaiKhoan}" >Xóa</button></td>
 
 
@@ -42,7 +42,7 @@ $(document).ready(function() {
         })
         tableDanhSach.html(content);
     }
-    $("#btnThemNguoiDung").click(function() {
+    $("#btnThemNguoiDung").click(function () {
         $("#modal-title").html("Them Nguoi Dung");
         var btn = ` 
             <button class="btn btn-success" id="btnThem">Them </button>
@@ -51,7 +51,7 @@ $(document).ready(function() {
 
     });
 
-    $("body").delegate("#btnThem", "click", function() {
+    $("body").delegate("#btnThem", "click", function () {
         //lay Thong tin
 
         var taiKhoan = $("#TaiKhoan").val();
@@ -66,25 +66,25 @@ $(document).ready(function() {
 
         // them vao database (API)
         nguoiDungService.ThemNguoiDung(nguoiDung)
-            .done(function(res) {
+            .done(function (res) {
                 console.log(res);
                 location.reload();
 
             })
-            .fail(function(err) {
+            .fail(function (err) {
                 console.log(err);
 
             })
     })
 
 
-    $("body").delegate(".btnXoa", "click", function() {
+    $("body").delegate(".btnXoa", "click", function () {
         var taiKhoan = $(this).data("id");
         nguoiDungService.XoaNguoiDung(taiKhoan)
-            .done(function() {
+            .done(function () {
                 location.reload();
             })
-            .fail(function(err) {
+            .fail(function (err) {
                 console.log(err);
 
             })
